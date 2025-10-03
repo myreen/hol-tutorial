@@ -3,3 +3,6 @@ title = "HOL Tutorial"
 
 [preprocessor.hol-filter]
 command = "python3 mdbook-hol-filter/hol-filter.py"
+
+[output.html]
+mathjax-support = true

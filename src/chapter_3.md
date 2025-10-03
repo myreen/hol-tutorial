@@ -1,5 +1,7 @@
 # Chapter 3
 
+\\[\alpha\\]
+
 ---
 <!-- PolyML code for extracting stuff from structures and printing types etc -->
 >>__ structure PNV = PolyML.NameSpace.Values
@@ -33,10 +35,10 @@
 
 In this section, HOL proofs and theorems are made concrete. The notion
 of *proof* is defined abstractly in the manual §LOGIC: a proof of a
-sequent $(\Gamma,t)$ from a set of sequents $\Delta$ (with respect to
-a deductive system ${\cal D}$) was defined to be a chain of sequents
-culminating in $(\Gamma,t)$, such that every element of the chain
-either belongs to $\Delta$ or else follows from $\Delta$ and earlier
+sequent \\((\Gamma,t)\\) from a set of sequents \\(\Delta\\) (with respect to
+a deductive system \\({\cal D}\\)) was defined to be a chain of sequents
+culminating in \\((\Gamma,t)\\), such that every element of the chain
+either belongs to \\(\Delta\\) or else follows from \\(\Delta\\) and earlier
 elements of the chain by deduction.  The notion of a *theorem* was
 also defined in §LOGIC: a theorem of a deductive system is a sequent
 that follows from the empty set of sequents by deduction; *i.e.*, it
@@ -70,14 +72,14 @@ these themselves have to be derived.
 
 As an illustration of a proof in HOL, the following chain of
 theorems forms a proof (from the empty set, in the HOL deductive
-system), for the particular terms $\mathtt{t}_1$ and $\mathtt{t}_2$,
+system), for the particular terms \\(\mathtt{t}_1\\) and \\(\mathtt{t}_2\\),
 both of HOL type `:bool`
 
-1. $t_1 \Rightarrow t_2 \vdash t_1 \Rightarrow t_2$
+1. \\(t_1 \Rightarrow t_2 \vdash t_1 \Rightarrow t_2\\)
 
-2. $t_1\; |- t_1$
+2. \\(t_1\; |- t_1\\)
 
-3. $t_1 \Rightarrow t_2, \; t_1 \vdash t_2$
+3. \\(t_1 \Rightarrow t_2, \; t_1 \vdash t_2\\)
 
 That is, the third theorem follows from the first and second.
 
@@ -129,7 +131,7 @@ There are, of course, an infinite number of proofs of the *form*
 shown in the example that can be conducted in HOL: one for every
 pair of `:bool`-typed terms. Moreover, every time a theorem of the form
 
-$$t_1 \Rightarrow \ t_2, \ t_1 \ \vdash \ t_2$$
+\\(\\)t_1 \Rightarrow \ t_2, \ t_1 \ \vdash \ t_2\\(\\)
 
 is required, its proof must be constructed anew. To capture the
 general pattern of inference, an ML function can be written to
@@ -146,8 +148,8 @@ assumptions.  It is specified for HOL by
 ```
 
 This general rule is valid because from a HOL theorem of the form
-$\Gamma \vdash t_1 \Rightarrow t_2$, the theorem $\Gamma \cup\{t_1\}
-\vdash t_2$ can be derived as for the specific instance above. The
+\\(\Gamma \vdash t_1 \Rightarrow t_2\\), the theorem \\(\Gamma \cup\{t_1\}
+\vdash t_2\\) can be derived as for the specific instance above. The
 rule can be implemented in ML as a function `UNDISCH`, say) that calls
 the appropriate sequence of primitive inferences. The ML definition of
 `UNDISCH` is simply
@@ -210,9 +212,9 @@ illustraated here, although there are more elaborate rewriters in HOL,
 such as `SIMP_RULE`, documented in [Section](??).
 
 `REWRITE_RULE` uses a list of equational theorems (theorems whose
-conclusions can be regarded as having the form $t_1 = t_2$) to replace
-any subterms of an object theorem that "match" $t_1$ by the
-corresponding instance of $t_2$. The rule matches recursively and to
+conclusions can be regarded as having the form \\(t_1 = t_2\\)) to replace
+any subterms of an object theorem that "match" \\(t_1\\) by the
+corresponding instance of \\(t_2\\). The rule matches recursively and to
 any depth, until no more replacements can be made, using internally
 defined search, matching and instantiation algorithms.  The validity
 of `REWRITE_RULE` rests ultimately on the primitive rules `SUBST` (for
@@ -270,10 +272,10 @@ derivation of a theorem resembles the derivation of a rule except in
 not having hypotheses. (The derivation of `TRUTH`, [Section](sec:T),
 is the only example given of this, but there are several others in
 HOL.)  There are also some rules that are intrinsically more general
-than theorems.  For example, for any two terms $t_1$ and $t_2$, the
-theorem $\vdash(\lambda{x}.t_1)t_2 = t_1[t_2/x]$ follows by the
+than theorems.  For example, for any two terms \\(t_1\\) and \\(t_2\\), the
+theorem \\(\vdash(\lambda{x}.t_1)t_2 = t_1[t_2/x]\\) follows by the
 primitive rule `BETA_CONV`. The rule `BETA_CONV` returns a theorem for
-each pair of terms $t_1$ and $t_2$, and is therefore equivalent to an
+each pair of terms \\(t_1\\) and \\(t_2\\), and is therefore equivalent to an
 infinite family of theorems. No single theorem can be expressed in the
 HOL logic that is equivalent to `BETA_CONV`.See [Chapter](avra-conv)
 for further discussion of this point.  Note that `UNDISCH` is not a
@@ -316,10 +318,10 @@ The abbreviation `conv` ("conversion") is used for the ML type
 
 ```
 
-1. $t'\vdash t'$   [`ASSUME`]
-2. $\Gamma\vdash t$ [`Hypothesis`]
-3. $\Gamma\vdash t' \Rightarrow t$ [`DISCH` 2]
-4. $\Gamma,\ t'\vdash t$   [`MP` 3,1]
+1. \\(t'\vdash t'\\)   [`ASSUME`]
+2. \\(\Gamma\vdash t\\) [`Hypothesis`]
+3. \\(\Gamma\vdash t' \Rightarrow t\\) [`DISCH` 2]
+4. \\(\Gamma,\ t'\vdash t\\)   [`MP` 3,1]
 
 ### Undischarging
 
@@ -331,9 +333,9 @@ The abbreviation `conv` ("conversion") is used for the ML type
    Γ ∪ {t1} |- t2
 
 ```
-1. $t_1\vdash t_1$    [`ASSUME`]
-2. $\Gamma\vdash t_1\Rightarrow t_2$ [`Hypothesis`]
-3. $\Gamma,\ t_1\vdash t_2$ [`MP` 2,1]
+1. \\(t_1\vdash t_1\\)    [`ASSUME`]
+2. \\(\Gamma\vdash t_1\Rightarrow t_2\\) [`Hypothesis`]
+3. \\(\Gamma,\ t_1\vdash t_2\\) [`MP` 2,1]
 
 
 ### Symmetry of equality
@@ -348,9 +350,9 @@ The abbreviation `conv` ("conversion") is used for the ML type
 
 ```
 
-1. $\Gamma\vdash t_1=t_2$ [`Hypothesis`]
-2. $\vdash t_1=t_1$ [`REFL`]
-3. $\Gamma\vdash t_2=t_1$ [`SUBST` 1,2]
+1. \\(\Gamma\vdash t_1=t_2\\) [`Hypothesis`]
+2. \\(\vdash t_1=t_1\\) [`REFL`]
+3. \\(\Gamma\vdash t_2=t_1\\) [`SUBST` 1,2]
 
 
 ### Transitivity of equality
@@ -365,9 +367,9 @@ The abbreviation `conv` ("conversion") is used for the ML type
 
 ```
 
-1. $\Gamma_2\vdash t_2=t_3$  [`Hypothesis`]
-2. $\Gamma_1\vdash t_1=t_2$  [`Hypothesis`]
-3. $\Gamma_1\cup\Gamma_2\vdash t_1=t_3$ [`SUBST` 1,2]
+1. \\(\Gamma_2\vdash t_2=t_3\\)  [`Hypothesis`]
+2. \\(\Gamma_1\vdash t_1=t_2\\)  [`Hypothesis`]
+3. \\(\Gamma_1\cup\Gamma_2\vdash t_1=t_3\\) [`SUBST` 1,2]
 
 ##skip
 
@@ -382,14 +384,14 @@ The abbreviation `conv` ("conversion") is used for the ML type
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t_1=t_2\over\Gamma\vdash t\ t_1 = t\ t_2$$
+\\(\\)\Gamma\vdash t_1=t_2\over\Gamma\vdash t\ t_1 = t\ t_2\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma\vdash t_1=t_2$\hfill [Hypothesis]
-\item $\vdash t\ t_1 = t\ t_1$ \hfill [\rul{REFL}]
-\item $\Gamma\vdash t\ t_1 = t\ t_2$ \hfill [\rul{SUBST} 1,2]
+\item \\(\Gamma\vdash t_1=t_2\\)\hfill [Hypothesis]
+\item \\(\vdash t\ t_1 = t\ t_1\\) \hfill [\rul{REFL}]
+\item \\(\Gamma\vdash t\ t_1 = t\ t_2\\) \hfill [\rul{SUBST} 1,2]
 \end{proof}
 
 
@@ -404,14 +406,14 @@ $$\Gamma\vdash t_1=t_2\over\Gamma\vdash t\ t_1 = t\ t_2$$
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t_1=t_2\over \Gamma\vdash t_1\ t = t_2\ t$$
+\\(\\)\Gamma\vdash t_1=t_2\over \Gamma\vdash t_1\ t = t_2\ t\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma\vdash t_1=t_2$\hfill [Hypothesis]
-\item$\vdash t_1\ t = t_1\ t$\hfill [\rul{REFL}]
-\item $\Gamma\vdash t_1\ t = t_2\ t$\hfill [\rul{SUBST} 1,2]
+\item \\(\Gamma\vdash t_1=t_2\\)\hfill [Hypothesis]
+\item\\(\vdash t_1\ t = t_1\ t\\)\hfill [\rul{REFL}]
+\item \\(\Gamma\vdash t_1\ t = t_2\ t\\)\hfill [\rul{SUBST} 1,2]
 \end{proof}
 
 
@@ -428,15 +430,15 @@ $$\Gamma\vdash t_1=t_2\over \Gamma\vdash t_1\ t = t_2\ t$$
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma_1\vdash t_1=t_2\qquad\qquad\qquad \Gamma_2\vdash t_1\over
-\Gamma_1\cup\Gamma_2\vdash t_2$$
+\\(\\)\Gamma_1\vdash t_1=t_2\qquad\qquad\qquad \Gamma_2\vdash t_1\over
+\Gamma_1\cup\Gamma_2\vdash t_2\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma_1\vdash t_1=t_2$ \hfill [Hypothesis]
-\item $\Gamma_2\vdash t_1$ \hfill [Hypothesis]
-\item $\Gamma_1\cup\Gamma_2\vdash t_2$ \hfill [\rul{SUBST} 1,2]
+\item \\(\Gamma_1\vdash t_1=t_2\\) \hfill [Hypothesis]
+\item \\(\Gamma_2\vdash t_1\\) \hfill [Hypothesis]
+\item \\(\Gamma_1\cup\Gamma_2\vdash t_2\\) \hfill [\rul{SUBST} 1,2]
 \end{proof}
 
 
@@ -453,21 +455,21 @@ $$\Gamma_1\vdash t_1=t_2\qquad\qquad\qquad \Gamma_2\vdash t_1\over
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t_1=t_2\over
-\Gamma\vdash t_1\Rightarrow t_2 \qquad\qquad\qquad \Gamma\vdash t_2\Rightarrow t_1$$
+\\(\\)\Gamma\vdash t_1=t_2\over
+\Gamma\vdash t_1\Rightarrow t_2 \qquad\qquad\qquad \Gamma\vdash t_2\Rightarrow t_1\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma\vdash t_1=t_2$ \hfill [Hypothesis]
-\item $t_1\vdash t_1$ \hfill [\rul{ASSUME}]
-\item $\Gamma,\ t_1\vdash t_2$ \hfill [\rul{EQ\_MP} 1,2]
-\item $\Gamma\vdash t_1\Rightarrow t_2$ \hfill [\rul{DISCH} 3]
-\item $\Gamma\vdash t_2=t_1$ \hfill [\rul{SYM} 1]
-\item $t_2\vdash t_2$ \hfill [\rul{ASSUME}]
-\item $\Gamma,\ t_2\vdash t_1$ \hfill [\rul{EQ\_MP} 5,6]
-\item $\Gamma\vdash t_2\Rightarrow t_1$ \hfill [\rul{DISCH} 7]
-\item $\Gamma\vdash t_1\Rightarrow t_2$ and $\Gamma\vdash t_2\Rightarrow t_1$\hfill [4,8]
+\item \\(\Gamma\vdash t_1=t_2\\) \hfill [Hypothesis]
+\item \\(t_1\vdash t_1\\) \hfill [\rul{ASSUME}]
+\item \\(\Gamma,\ t_1\vdash t_2\\) \hfill [\rul{EQ\_MP} 1,2]
+\item \\(\Gamma\vdash t_1\Rightarrow t_2\\) \hfill [\rul{DISCH} 3]
+\item \\(\Gamma\vdash t_2=t_1\\) \hfill [\rul{SYM} 1]
+\item \\(t_2\vdash t_2\\) \hfill [\rul{ASSUME}]
+\item \\(\Gamma,\ t_2\vdash t_1\\) \hfill [\rul{EQ\_MP} 5,6]
+\item \\(\Gamma\vdash t_2\Rightarrow t_1\\) \hfill [\rul{DISCH} 7]
+\item \\(\Gamma\vdash t_1\Rightarrow t_2\\) and \\(\Gamma\vdash t_2\Rightarrow t_1\\)\hfill [4,8]
 \end{proof}
 
 
@@ -484,15 +486,15 @@ $$\Gamma\vdash t_1=t_2\over
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\vdash\T$$
+\\(\\)\vdash\T\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash \T = ((\lquant{x}x)=(\lquant{x}x))$\hfill [Definition of \T]
-\item $\vdash ((\lquant{x}x)=(\lquant{x}x)) = \T$\hfill [\rul{SYM} 1]
-\item $\vdash (\lquant{x}x)=(\lquant{x}x)$\hfill [\rul{REFL}]
-\item $\vdash\T$ \hfill [\rul{EQ\_MP} 2,3]
+\item \\(\vdash \T = ((\lquant{x}x)=(\lquant{x}x))\\)\hfill [Definition of \T]
+\item \\(\vdash ((\lquant{x}x)=(\lquant{x}x)) = \T\\)\hfill [\rul{SYM} 1]
+\item \\(\vdash (\lquant{x}x)=(\lquant{x}x)\\)\hfill [\rul{REFL}]
+\item \\(\vdash\T\\) \hfill [\rul{EQ\_MP} 2,3]
 \end{proof}
 
 
@@ -509,19 +511,19 @@ $$\vdash\T$$
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t = \T\over \Gamma\vdash t$$
+\\(\\)\Gamma\vdash t = \T\over \Gamma\vdash t\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma\vdash t = \T$\hfill [Hypothesis]
-\item $\Gamma\vdash \T = t$\hfill [\rul{SYM} 1]
-\item $\vdash \T$\hfill [\rul{TRUTH}]
-\item $\Gamma\vdash t$\hfill [\rul{EQ\_MP} 2,3]
+\item \\(\Gamma\vdash t = \T\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash \T = t\\)\hfill [\rul{SYM} 1]
+\item \\(\vdash \T\\)\hfill [\rul{TRUTH}]
+\item \\(\Gamma\vdash t\\)\hfill [\rul{EQ\_MP} 2,3]
 \end{proof}
 
 
-### Specialization ($\forall$-elimination)
+### Specialization (\\(\forall\\)-elimination)
 
 \begin{holboxed}
 \index{SPEC@\ml{SPEC}|pin}
@@ -535,32 +537,32 @@ $$\Gamma\vdash t = \T\over \Gamma\vdash t$$
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash \uquant{x}t\over \Gamma\vdash t[t'/x]$$
+\\(\\)\Gamma\vdash \uquant{x}t\over \Gamma\vdash t[t'/x]\\(\\)
 \begin{itemize}
-\item $t[t'/x]$ denotes the result of substituting $t'$ for free\index{free variables, in HOL logic@free variables, in \HOL logic}
-occurrences of $x$ in $t$, with the restriction that no free variables in $t'$
+\item \\(t[t'/x]\\) denotes the result of substituting \\(t'\\) for free\index{free variables, in HOL logic@free variables, in \HOL logic}
+occurrences of \\(x\\) in \\(t\\), with the restriction that no free variables in \\(t'\\)
 become bound after substitution.
 \end{itemize}
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash \forall = (\lquant{P}P = (\lquant{x}\T))$ \hfill
-[\rul{INST\_TYPE} applied to the definition of $\forall$]
-\item $\Gamma\vdash \forall(\lquant{x}t)$\hfill [Hypothesis]
-\item $\Gamma\vdash (\lquant{P}P=(\lquant{x}\T))(\lquant{x}t)$\hfill
+\item \\(\vdash \forall = (\lquant{P}P = (\lquant{x}\T))\\) \hfill
+[\rul{INST\_TYPE} applied to the definition of \\(\forall\\)]
+\item \\(\Gamma\vdash \forall(\lquant{x}t)\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash (\lquant{P}P=(\lquant{x}\T))(\lquant{x}t)\\)\hfill
 [\rul{SUBST} 1,2]
-\item $\vdash  (\lquant{P}P=(\lquant{x}\T))(\lquant{x}t) =
-((\lquant{x}t)=(\lquant{x}\T))$\hfill [\rul{BETA\_CONV}]
-\item $\Gamma\vdash (\lquant{x}t)=(\lquant{x}\T)$\hfill [\rul{EQ\_MP} 4,3]
-\item $\Gamma\vdash (\lquant{x}t)\ t' = (\lquant{x}\T)\ t'$ \hfill
+\item \\(\vdash  (\lquant{P}P=(\lquant{x}\T))(\lquant{x}t) =
+((\lquant{x}t)=(\lquant{x}\T))\\)\hfill [\rul{BETA\_CONV}]
+\item \\(\Gamma\vdash (\lquant{x}t)=(\lquant{x}\T)\\)\hfill [\rul{EQ\_MP} 4,3]
+\item \\(\Gamma\vdash (\lquant{x}t)\ t' = (\lquant{x}\T)\ t'\\) \hfill
 [\rul{AP\_THM} 5]
-\item $\vdash (\lquant{x}t)\ t' = t[t'/x]$ \hfill [\rul{BETA\_CONV}]
-\item $\Gamma\vdash t[t'/x] = (\lquant{x}t)\ t'$ \hfill [\rul{SYM} 7]
-\item $\Gamma\vdash t[t'/x] = (\lquant{x}\T)\ t'$ \hfill [\rul{TRANS} 8,6]
-\item $\vdash (\lquant{x}\T)\ t' = \T$ \hfill [\rul{BETA\_CONV}]
-\item $\Gamma\vdash t[t'/x] = \T$ \hfill [\rul{TRANS} 9,10]
-\item $\Gamma\vdash t[t'/x]$ \hfill [\rul{EQT\_ELIM} 11]
+\item \\(\vdash (\lquant{x}t)\ t' = t[t'/x]\\) \hfill [\rul{BETA\_CONV}]
+\item \\(\Gamma\vdash t[t'/x] = (\lquant{x}t)\ t'\\) \hfill [\rul{SYM} 7]
+\item \\(\Gamma\vdash t[t'/x] = (\lquant{x}\T)\ t'\\) \hfill [\rul{TRANS} 8,6]
+\item \\(\vdash (\lquant{x}\T)\ t' = \T\\) \hfill [\rul{BETA\_CONV}]
+\item \\(\Gamma\vdash t[t'/x] = \T\\) \hfill [\rul{TRANS} 9,10]
+\item \\(\Gamma\vdash t[t'/x]\\) \hfill [\rul{EQT\_ELIM} 11]
 \end{proof}
 
 
@@ -577,28 +579,28 @@ become bound after substitution.
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t\over\Gamma\vdash t=\T$$
+\\(\\)\Gamma\vdash t\over\Gamma\vdash t=\T\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash\uquant{b_1\ b_2}(b_1\Rightarrow b_2)\Rightarrow(b_2\Rightarrow b_1)\Rightarrow(b_1=b_2)$
+\item \\(\vdash\uquant{b_1\ b_2}(b_1\Rightarrow b_2)\Rightarrow(b_2\Rightarrow b_1)\Rightarrow(b_1=b_2)\\)
 \hfill [Axiom]
-\item $\vdash\uquant{b_2}(t\Rightarrow b_2)\Rightarrow(b_2\Rightarrow t)\Rightarrow(t=b_2)$
+\item \\(\vdash\uquant{b_2}(t\Rightarrow b_2)\Rightarrow(b_2\Rightarrow t)\Rightarrow(t=b_2)\\)
 \hfill [\rul{SPEC} 1]
-\item $\vdash(t\Rightarrow\T)\Rightarrow(\T\Rightarrow t)\Rightarrow(t=\T)$\hfill [\rul{SPEC} 2]
-\item $\vdash\T$\hfill [\rul{TRUTH}]
-\item $\vdash t\Rightarrow\T$\hfill [\rul{DISCH} 4]
-\item $\vdash(\T\Rightarrow t)\Rightarrow(t=\T)$\hfill [\rul{MP} 3,5]
-\item $\Gamma \vdash t$\hfill [Hypothesis]
-\item $\Gamma\vdash\T\Rightarrow t$\hfill [\rul{DISCH} 7]
-\item $\Gamma\vdash t=\T$\hfill [\rul{MP} 6,8]
+\item \\(\vdash(t\Rightarrow\T)\Rightarrow(\T\Rightarrow t)\Rightarrow(t=\T)\\)\hfill [\rul{SPEC} 2]
+\item \\(\vdash\T\\)\hfill [\rul{TRUTH}]
+\item \\(\vdash t\Rightarrow\T\\)\hfill [\rul{DISCH} 4]
+\item \\(\vdash(\T\Rightarrow t)\Rightarrow(t=\T)\\)\hfill [\rul{MP} 3,5]
+\item \\(\Gamma \vdash t\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash\T\Rightarrow t\\)\hfill [\rul{DISCH} 7]
+\item \\(\Gamma\vdash t=\T\\)\hfill [\rul{MP} 6,8]
 \end{proof}
 \index{equality, in HOL logic@equality, in \HOL logic!other rules for|)}
 \index{T@\holtxt{T}!rules of inference for|)}
 
 
-### {\texorpdfstring{Generalization ($\forall$-introduction)}{Generalization (forall-introduction)}}%
+### {\texorpdfstring{Generalization (\\(\forall\\)-introduction)}{Generalization (forall-introduction)}}%
 \index{universal quantifier, in HOL logic@universal quantifier, in \HOL logic!inference rules for}
 
 
@@ -614,34 +616,34 @@ $$\Gamma\vdash t\over\Gamma\vdash t=\T$$
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t\over\Gamma\vdash\uquant{x} t$$
+\\(\\)\Gamma\vdash t\over\Gamma\vdash\uquant{x} t\\(\\)
 \begin{itemize}
-\item Where $x$ is not free in $\Gamma$.
+\item Where \\(x\\) is not free in \\(\Gamma\\).
 \end{itemize}
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma\vdash t$\hfill [Hypothesis]
-\item $\Gamma\vdash t = \T$\hfill [\rul{EQT\_INTRO} 1]
-\item $\Gamma\vdash(\lquant{x}t)=(\lquant{x}\T)$\hfill [\rul{ABS} 2]
-\item $\vdash \forall(\lquant{x}t) = \forall(\lquant{x}t)$\hfill [\rul{REFL}]
-\item $\vdash \forall = (\lquant{P} P =(\lquant{x}\T))$\hfill
-[\rul{INST\_TYPE} applied to the definition of $\forall$]
-\item $\vdash\forall(\lquant{x}t)=(\lquant{P} P=(\lquant{x}\T))(\lquant{x}t)$
+\item \\(\Gamma\vdash t\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash t = \T\\)\hfill [\rul{EQT\_INTRO} 1]
+\item \\(\Gamma\vdash(\lquant{x}t)=(\lquant{x}\T)\\)\hfill [\rul{ABS} 2]
+\item \\(\vdash \forall(\lquant{x}t) = \forall(\lquant{x}t)\\)\hfill [\rul{REFL}]
+\item \\(\vdash \forall = (\lquant{P} P =(\lquant{x}\T))\\)\hfill
+[\rul{INST\_TYPE} applied to the definition of \\(\forall\\)]
+\item \\(\vdash\forall(\lquant{x}t)=(\lquant{P} P=(\lquant{x}\T))(\lquant{x}t)\\)
 \hfill [\rul{SUBST} 5,4]
-\item $\vdash(\lquant{P} P=(\lquant{x}\T))(\lquant{x}t)=((\lquant{x}t)
-=(\lquant{x}\T))$\hfill [\rul{BETA\_CONV}]
-\item $\vdash\forall(\lquant{x}t) = ((\lquant{x}t)=(\lquant{x}\T))$
+\item \\(\vdash(\lquant{P} P=(\lquant{x}\T))(\lquant{x}t)=((\lquant{x}t)
+=(\lquant{x}\T))\\)\hfill [\rul{BETA\_CONV}]
+\item \\(\vdash\forall(\lquant{x}t) = ((\lquant{x}t)=(\lquant{x}\T))\\)
 \hfill [\rul{TRANS} 6,7]
-\item $\vdash((\lquant{x}t)=(\lquant{x}\T)) = \forall(\lquant{x}\T)$
+\item \\(\vdash((\lquant{x}t)=(\lquant{x}\T)) = \forall(\lquant{x}\T)\\)
 \hfill [\rul{SYM} 8]
-\item $\Gamma\vdash\forall(\lquant{x}t)$\hfill [\rul{EQ\_MP} 9,3]
+\item \\(\Gamma\vdash\forall(\lquant{x}t)\\)\hfill [\rul{EQ\_MP} 9,3]
 \end{proof}
 
 
 
-### Simple $\alpha$-conversion
+### Simple \\(\alpha\\)-conversion
 
 \begin{holboxed}
 \begin{verbatim}
@@ -651,9 +653,9 @@ $$\Gamma\vdash t\over\Gamma\vdash\uquant{x} t$$
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\vdash(\lquant{x_1}t\ x_1) = (\lquant{x_2}t\ x_2)$$
+\\(\\)\vdash(\lquant{x_1}t\ x_1) = (\lquant{x_2}t\ x_2)\\(\\)
 \begin{itemize}
-\item Where neither $x_1$ nor $x_2$ occurs free in $t$.\footnote{\ml{SIMPLE\_ALPHA} is
+\item Where neither \\(x_1\\) nor \\(x_2\\) occurs free in \\(t\\).\footnote{\ml{SIMPLE\_ALPHA} is
 included here because it is
 used in a subsequent derivation, but it is not actually in the
 HOL system, as it is subsumed by other functions.}
@@ -662,31 +664,31 @@ HOL system, as it is subsumed by other functions.}
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item$\vdash(\lquant{x_1}t\ x_1)\ x = t\ x$\hfill [\rul{BETA\_CONV}]
-\item$\vdash(\lquant{x_2}t\ x_2)\ x = t\ x$\hfill [\rul{BETA\_CONV}]
-\item $\vdash t\ x = (\lquant{x_2}t\ x_2)\ x$\hfill [\rul{SYM} 2]
-\item $\vdash (\lquant{x_1}t\ x_1)\ x = (\lquant{x_2}t\ x_2)\ x$
+\item\\(\vdash(\lquant{x_1}t\ x_1)\ x = t\ x\\)\hfill [\rul{BETA\_CONV}]
+\item\\(\vdash(\lquant{x_2}t\ x_2)\ x = t\ x\\)\hfill [\rul{BETA\_CONV}]
+\item \\(\vdash t\ x = (\lquant{x_2}t\ x_2)\ x\\)\hfill [\rul{SYM} 2]
+\item \\(\vdash (\lquant{x_1}t\ x_1)\ x = (\lquant{x_2}t\ x_2)\ x\\)
 \hfill [\rul{TRANS} 1,3]
-\item $\vdash(\lquant{x}(\lquant{x_1}t\ x_1)\ x) =
-(\lquant{x}(\lquant{x_2}t\ x_2)\ x)$\hfill [\rul{ABS} 4]
-\item $\vdash\uquant{f}(\lquant{x}f\ x) = f$\hfill
+\item \\(\vdash(\lquant{x}(\lquant{x_1}t\ x_1)\ x) =
+(\lquant{x}(\lquant{x_2}t\ x_2)\ x)\\)\hfill [\rul{ABS} 4]
+\item \\(\vdash\uquant{f}(\lquant{x}f\ x) = f\\)\hfill
 [Appropriately type-instantiated axiom]
-\item $\vdash(\lquant{x}(\lquant{x_1}t\ x_1)x) = \lquant{x_1}t\ x_1$
+\item \\(\vdash(\lquant{x}(\lquant{x_1}t\ x_1)x) = \lquant{x_1}t\ x_1\\)
 \hfill [\rul{SPEC} 6]
-\item $\vdash(\lquant{x}(\lquant{x_2}t\ x_2)x) = \lquant{x_2}t\ x_2$
+\item \\(\vdash(\lquant{x}(\lquant{x_2}t\ x_2)x) = \lquant{x_2}t\ x_2\\)
 \hfill [\rul{SPEC} 6]
-\item $\vdash (\lquant{x_1}t\ x_1) = (\lquant{x}(\lquant{x_1}t\ x_1)x)$
+\item \\(\vdash (\lquant{x_1}t\ x_1) = (\lquant{x}(\lquant{x_1}t\ x_1)x)\\)
 \hfill [\rul{SYM} 7]
-\item $\vdash (\lquant{x_1}t\ x_1) = (\lquant{x}(\lquant{x_2}t\ x_2)x)$
+\item \\(\vdash (\lquant{x_1}t\ x_1) = (\lquant{x}(\lquant{x_2}t\ x_2)x)\\)
 \hfill [\rul{TRANS} 9,5]
-\item $\vdash(\lquant{x_1}t\ x_1)=(\lquant{x_2}t\ x_2)$\hfill
+\item \\(\vdash(\lquant{x_1}t\ x_1)=(\lquant{x_2}t\ x_2)\\)\hfill
 [\rul{TRANS} 10,8]
 \end{proof}
 
 
 
 
-### {\texorpdfstring{$\eta$-conversion}{Eta-conversion}}
+### {\texorpdfstring{\\(\eta\\)-conversion}{Eta-conversion}}
 
 \begin{holboxed}
 \index{ETA_CONV@\ml{ETA\_CONV}|pin}
@@ -696,20 +698,20 @@ HOL system, as it is subsumed by other functions.}
 \end{holboxed}
 \vspace{12pt plus2pt minus1pt}
 
-$$\vdash(\lquant{x'}t\ x') = t$$
+\\(\\)\vdash(\lquant{x'}t\ x') = t\\(\\)
 \begin{itemize}
-\item Where $x'$ does not occur free\index{free variables, in HOL logic@free variables, in \HOL logic} in $t$ (we use $x'$ rather than just $x$
+\item Where \\(x'\\) does not occur free\index{free variables, in HOL logic@free variables, in \HOL logic} in \\(t\\) (we use \\(x'\\) rather than just \\(x\\)
 to motivate the use of \rul{SIMPLE\_ALPHA} in the derivation below).
 \end{itemize}
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash\uquant{f}(\lquant{x}f\ x) = f$\hfill
+\item \\(\vdash\uquant{f}(\lquant{x}f\ x) = f\\)\hfill
 [Appropriately type-instantiated axiom]
-\item  $\vdash(\lquant{x}t\ x) = t$\hfill [\rul{SPEC} 1]
-\item $\vdash(\lquant{x'}t\ x')=(\lquant{x}t\ x)$\hfill [\rul{SIMPLE\_ALPHA}]
-\item $\vdash(\lquant{x'}t\ x')=t$\hfill [\rul{TRANS} 3,2]
+\item  \\(\vdash(\lquant{x}t\ x) = t\\)\hfill [\rul{SPEC} 1]
+\item \\(\vdash(\lquant{x'}t\ x')=(\lquant{x}t\ x)\\)\hfill [\rul{SIMPLE\_ALPHA}]
+\item \\(\vdash(\lquant{x'}t\ x')=t\\)\hfill [\rul{TRANS} 3,2]
 \end{proof}
 
 
@@ -727,29 +729,29 @@ to motivate the use of \rul{SIMPLE\_ALPHA} in the derivation below).
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash\uquant{x} t_1\ x = t_2\ x\over\Gamma\vdash t_1=t_2$$
+\\(\\)\Gamma\vdash\uquant{x} t_1\ x = t_2\ x\over\Gamma\vdash t_1=t_2\\(\\)
 \begin{itemize}
-\item Where $x$ is not free\index{free variables, in HOL logic@free variables, in \HOL logic} in $t_1$ or $t_2$.
+\item Where \\(x\\) is not free\index{free variables, in HOL logic@free variables, in \HOL logic} in \\(t_1\\) or \\(t_2\\).
 \end{itemize}
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma\vdash\uquant{x}t_1\ x=t_2\ x$\hfill [Hypothesis]
-\item $\Gamma\vdash t_1\ x'=t_2\ x'$\hfill [\rul{SPEC} 1 ($x'$ is a fresh)]
-\item $\Gamma\vdash(\lquant{x'}t_1\ x') = (\lquant{x'}t_2\ x')$\hfill
+\item \\(\Gamma\vdash\uquant{x}t_1\ x=t_2\ x\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash t_1\ x'=t_2\ x'\\)\hfill [\rul{SPEC} 1 (\\(x'\\) is a fresh)]
+\item \\(\Gamma\vdash(\lquant{x'}t_1\ x') = (\lquant{x'}t_2\ x')\\)\hfill
         [\rul{ABS} 2]
-\item $\vdash(\lquant{x'}t_1\ x') = t_1$\hfill [\rul{ETA\_CONV}]
-\item $\vdash t_1 = (\lquant{x'}t_1\ x')$\hfill [\rul{SYM} 4]
-\item $\Gamma\vdash t_1 = (\lquant{x'}t_2\ x')$\hfill [\rul{TRANS} 5,3]
-\item $\vdash(\lquant{x'}t_2\ x') = t_2$\hfill [\rul{ETA\_CONV}]
-\item $\Gamma\vdash t_1=t_2$\hfill [\rul{TRANS} 6,7]
+\item \\(\vdash(\lquant{x'}t_1\ x') = t_1\\)\hfill [\rul{ETA\_CONV}]
+\item \\(\vdash t_1 = (\lquant{x'}t_1\ x')\\)\hfill [\rul{SYM} 4]
+\item \\(\Gamma\vdash t_1 = (\lquant{x'}t_2\ x')\\)\hfill [\rul{TRANS} 5,3]
+\item \\(\vdash(\lquant{x'}t_2\ x') = t_2\\)\hfill [\rul{ETA\_CONV}]
+\item \\(\Gamma\vdash t_1=t_2\\)\hfill [\rul{TRANS} 6,7]
 \end{proof}
 
 
 
 
-### {\texorpdfstring{$\hilbert$-introduction}{Hilbert-introduction}}
+### {\texorpdfstring{\\(\hilbert\\)-introduction}{Hilbert-introduction}}
 
 \begin{holboxed}
 \index{choice operator, in HOL logic@choice operator, in \HOL logic!inference rules for}
@@ -760,22 +762,22 @@ $$\Gamma\vdash\uquant{x} t_1\ x = t_2\ x\over\Gamma\vdash t_1=t_2$$
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t_1\ t_2\over\Gamma\vdash t_1(\hilbert\ t_1)$$
+\\(\\)\Gamma\vdash t_1\ t_2\over\Gamma\vdash t_1(\hilbert\ t_1)\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash\uquant{P\ x}P\ x\Rightarrow P(\hilbert\ P)$\hfill [Suitably
+\item \\(\vdash\uquant{P\ x}P\ x\Rightarrow P(\hilbert\ P)\\)\hfill [Suitably
 type-instantiated axiom]
-\item $\vdash t_1\ t_2 \Rightarrow t_1(\hilbert\ t_1)$\hfill [\rul{SPEC} 1 (twice)]
-\item $\Gamma\vdash t_1\ t_2$\hfill [Hypothesis]
-\item $\Gamma\vdash t_1(\hilbert\ t_1)$\hfill [\rul{MP} 2,3]
+\item \\(\vdash t_1\ t_2 \Rightarrow t_1(\hilbert\ t_1)\\)\hfill [\rul{SPEC} 1 (twice)]
+\item \\(\Gamma\vdash t_1\ t_2\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash t_1(\hilbert\ t_1)\\)\hfill [\rul{MP} 2,3]
 \end{proof}
 
 
 
 
-### $\hilbert$-elimination
+### \\(\hilbert\\)-elimination
 
 \begin{holboxed}
 \index{choice operator, in HOL logic@choice operator, in \HOL logic!inference rules for}
@@ -786,28 +788,28 @@ type-instantiated axiom]
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma_1\vdash t_1(\hilbert\ t_1)\qquad\qquad\qquad\Gamma_2,\ t_1\ v\vdash t
-\over \Gamma_1\cup\Gamma_2\vdash t$$
+\\(\\)\Gamma_1\vdash t_1(\hilbert\ t_1)\qquad\qquad\qquad\Gamma_2,\ t_1\ v\vdash t
+\over \Gamma_1\cup\Gamma_2\vdash t\\(\\)
 \begin{itemize}
-\item Where $v$ occurs nowhere except in the assumption $t_1\ v$ of the second
+\item Where \\(v\\) occurs nowhere except in the assumption \\(t_1\ v\\) of the second
 hypothesis.
 \end{itemize}
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma_2,\ t_1\ v\vdash t$ \hfill [Hypothesis]
-\item $\Gamma_2\vdash t_1\ v\Rightarrow t$\hfill [\rul{DISCH} 1]
-\item $\Gamma_2\vdash\uquant{v}t_1\ v\Rightarrow t$\hfill [\rul{GEN} 2]
-\item $\Gamma_2\vdash t_1(\hilbert\ t_1)\Rightarrow t$\hfill [\rul{SPEC} 3]
-\item $\Gamma_1\vdash t_1(\hilbert\ t_1)$\hfill [Hypothesis]
-\item $\Gamma_1\cup\Gamma_2\vdash t$\hfill [\rul{MP} 4,5]
+\item \\(\Gamma_2,\ t_1\ v\vdash t\\) \hfill [Hypothesis]
+\item \\(\Gamma_2\vdash t_1\ v\Rightarrow t\\)\hfill [\rul{DISCH} 1]
+\item \\(\Gamma_2\vdash\uquant{v}t_1\ v\Rightarrow t\\)\hfill [\rul{GEN} 2]
+\item \\(\Gamma_2\vdash t_1(\hilbert\ t_1)\Rightarrow t\\)\hfill [\rul{SPEC} 3]
+\item \\(\Gamma_1\vdash t_1(\hilbert\ t_1)\\)\hfill [Hypothesis]
+\item \\(\Gamma_1\cup\Gamma_2\vdash t\\)\hfill [\rul{MP} 4,5]
 \end{proof}
 
 
 
 
-### {\texorpdfstring{$\exists$-introduction}{Exists-introduction}}
+### {\texorpdfstring{\\(\exists\\)-introduction}{Exists-introduction}}
 \index{existential quantifier, in HOL logic@existential quantifier, in \HOL logic!inference rules for|(}
 
 \begin{holboxed}
@@ -819,40 +821,40 @@ hypothesis.
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t_1[t_2]\over \Gamma\vdash \equant{x}t_1[x]$$
+\\(\\)\Gamma\vdash t_1[t_2]\over \Gamma\vdash \equant{x}t_1[x]\\(\\)
 \begin{itemize}
-\item Where $t_1[t_2]$ denotes a term $t_1$ with some free\index{free variables, in HOL logic@free variables, in \HOL logic}
-occurrences of $t_2$
-singled out, and $t_1[x]$ denotes the result of replacing these
-occurrences of $t_1$ by $x$, subject to the restriction that $x$
+\item Where \\(t_1[t_2]\\) denotes a term \\(t_1\\) with some free\index{free variables, in HOL logic@free variables, in \HOL logic}
+occurrences of \\(t_2\\)
+singled out, and \\(t_1[x]\\) denotes the result of replacing these
+occurrences of \\(t_1\\) by \\(x\\), subject to the restriction that \\(x\\)
 doesn't become bound after substitution.
 \end{itemize}
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash(\lquant{x}t_1[x])t_2= t_1[t_2]$\hfill [\rul{BETA\_CONV}]
-\item $\vdash t_1[t_2] = (\lquant{x}t_1[x])t_2$\hfill [\rul{SYM} 1]
-\item $\Gamma\vdash t_1[t_2]$\hfill [Hypothesis]
-\item $\Gamma\vdash(\lquant{x}t_1[x])t_2$\hfill [\rul{EQ\_MP} 2,3]
-\item $\Gamma\vdash(\lquant{x}t_1[x])(\hilbert(\lquant{x}t_1[x]))$\hfill
+\item \\(\vdash(\lquant{x}t_1[x])t_2= t_1[t_2]\\)\hfill [\rul{BETA\_CONV}]
+\item \\(\vdash t_1[t_2] = (\lquant{x}t_1[x])t_2\\)\hfill [\rul{SYM} 1]
+\item \\(\Gamma\vdash t_1[t_2]\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash(\lquant{x}t_1[x])t_2\\)\hfill [\rul{EQ\_MP} 2,3]
+\item \\(\Gamma\vdash(\lquant{x}t_1[x])(\hilbert(\lquant{x}t_1[x]))\\)\hfill
 [\rul{SELECT\_INTRO} 4]
-\item $\vdash \exists = \lquant{P} P(\hilbert\ P)$\hfill
-[\rul{INST\_TYPE} applied to the definition of $\exists$]
-\item $\vdash\exists(\lquant{x}t_1[x]) =
-(\lquant{P}P(\hilbert\ P))(\lquant{x}t_1[x])$\hfill [\rul{AP\_THM} 6]
-\item $\vdash(\lquant{P}P(\hilbert\ P))(\lquant{x}t_1[x]) =
-(\lquant{x}t_1[x])(\hilbert(\lquant{x}t_1[x]))$\hfill [\rul{BETA\_CONV}]
-\item $\vdash\exists(\lquant{x}t_1[x]) =
-(\lquant{x}t_1[x])(\hilbert(\lquant{x}t_1[x]))$\hfill [\rul{TRANS} 7,8]
-\item $\vdash(\lquant{x}t_1[x])(\hilbert(\lquant{x}t_1[x])) =
-\exists(\lquant{x}t_1[x])$\hfill [\rul{SYM} 9]
-\item $\Gamma\vdash\exists(\lquant{x}t_1[x])$\hfill [\rul{EQ\_MP} 10,5]
+\item \\(\vdash \exists = \lquant{P} P(\hilbert\ P)\\)\hfill
+[\rul{INST\_TYPE} applied to the definition of \\(\exists\\)]
+\item \\(\vdash\exists(\lquant{x}t_1[x]) =
+(\lquant{P}P(\hilbert\ P))(\lquant{x}t_1[x])\\)\hfill [\rul{AP\_THM} 6]
+\item \\(\vdash(\lquant{P}P(\hilbert\ P))(\lquant{x}t_1[x]) =
+(\lquant{x}t_1[x])(\hilbert(\lquant{x}t_1[x]))\\)\hfill [\rul{BETA\_CONV}]
+\item \\(\vdash\exists(\lquant{x}t_1[x]) =
+(\lquant{x}t_1[x])(\hilbert(\lquant{x}t_1[x]))\\)\hfill [\rul{TRANS} 7,8]
+\item \\(\vdash(\lquant{x}t_1[x])(\hilbert(\lquant{x}t_1[x])) =
+\exists(\lquant{x}t_1[x])\\)\hfill [\rul{SYM} 9]
+\item \\(\Gamma\vdash\exists(\lquant{x}t_1[x])\\)\hfill [\rul{EQ\_MP} 10,5]
 \end{proof}
 
 
 
-### $\exists$-elimination
+### \\(\exists\\)-elimination
 
 \begin{holboxed}
 \index{CHOOSE@\ml{CHOOSE}|pin}
@@ -862,37 +864,37 @@ doesn't become bound after substitution.
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma_1\vdash\equant{x}t[x]\qquad\qquad\qquad \Gamma_2,\ t[v]\vdash t'
-\over \Gamma_1\cup\Gamma_2\vdash t'$$
+\\(\\)\Gamma_1\vdash\equant{x}t[x]\qquad\qquad\qquad \Gamma_2,\ t[v]\vdash t'
+\over \Gamma_1\cup\Gamma_2\vdash t'\\(\\)
 \begin{itemize}
-\item Where $t[v]$ denotes a term $t$ with some free\index{free variables, in HOL logic@free variables, in \HOL logic}
-occurrences of the variable $v$
-singled out, and $t[x]$ denotes the result of replacing these
-occurrences of $v$ by $x$, subject to the restriction that $x$ doesn't become
+\item Where \\(t[v]\\) denotes a term \\(t\\) with some free\index{free variables, in HOL logic@free variables, in \HOL logic}
+occurrences of the variable \\(v\\)
+singled out, and \\(t[x]\\) denotes the result of replacing these
+occurrences of \\(v\\) by \\(x\\), subject to the restriction that \\(x\\) doesn't become
 bound after substitution.
 \end{itemize}
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash \exists = \lquant{P} P(\hilbert\ P)$\hfill
-[\rul{INST\_TYPE} applied to the definition of $\exists$]
-\item $\vdash\exists(\lquant{x}t[x]) =
-(\lquant{P}P(\hilbert\ P))(\lquant{x}t[x])$\hfill [\rul{AP\_THM} 1]
-\item $\Gamma_1\vdash\exists(\lquant{x}t[x])$\hfill [Hypothesis]
-\item $\Gamma_1\vdash (\lquant{P}P(\hilbert\ P))(\lquant{x}t[x])$
+\item \\(\vdash \exists = \lquant{P} P(\hilbert\ P)\\)\hfill
+[\rul{INST\_TYPE} applied to the definition of \\(\exists\\)]
+\item \\(\vdash\exists(\lquant{x}t[x]) =
+(\lquant{P}P(\hilbert\ P))(\lquant{x}t[x])\\)\hfill [\rul{AP\_THM} 1]
+\item \\(\Gamma_1\vdash\exists(\lquant{x}t[x])\\)\hfill [Hypothesis]
+\item \\(\Gamma_1\vdash (\lquant{P}P(\hilbert\ P))(\lquant{x}t[x])\\)
 \hfill [\rul{EQ\_MP} 2,3]
-\item $\vdash(\lquant{P}P(\hilbert\ P))(\lquant{x}t[x]) =
-(\lquant{x}t[x])(\hilbert(\lquant{x}t[x]))$\hfill [\rul{BETA\_CONV}]
-\item $\Gamma_1\vdash(\lquant{x}t[x])(\hilbert(\lquant{x}t[x])$\hfill
+\item \\(\vdash(\lquant{P}P(\hilbert\ P))(\lquant{x}t[x]) =
+(\lquant{x}t[x])(\hilbert(\lquant{x}t[x]))\\)\hfill [\rul{BETA\_CONV}]
+\item \\(\Gamma_1\vdash(\lquant{x}t[x])(\hilbert(\lquant{x}t[x])\\)\hfill
 [\rul{EQ\_MP} 5,4]
-\item $\vdash(\lquant{x}t[x])v = t[v]$\hfill [\rul{BETA\_CONV}]
-\item $\vdash t[v] =(\lquant{x}t[x])v$\hfill [\rul{SYM} 7]
-\item $\Gamma_2,\ t[v]\vdash t'$\hfill [Hypothesis]
-\item $\Gamma_2\vdash t[v]\Rightarrow t'$\hfill [\rul{DISCH} 9]
-\item $\Gamma_2\vdash(\lquant{x}t[x])v\Rightarrow t'$\hfill [\rul{SUBST} 8,10]
-\item $\Gamma_2,\ (\lquant{x}t[x])v\vdash t'$\hfill [\rul{UNDISCH} 11]
-\item $\Gamma_1\cup\Gamma_2\vdash t'$\hfill [\rul{SELECT\_ELIM} 6,12]
+\item \\(\vdash(\lquant{x}t[x])v = t[v]\\)\hfill [\rul{BETA\_CONV}]
+\item \\(\vdash t[v] =(\lquant{x}t[x])v\\)\hfill [\rul{SYM} 7]
+\item \\(\Gamma_2,\ t[v]\vdash t'\\)\hfill [Hypothesis]
+\item \\(\Gamma_2\vdash t[v]\Rightarrow t'\\)\hfill [\rul{DISCH} 9]
+\item \\(\Gamma_2\vdash(\lquant{x}t[x])v\Rightarrow t'\\)\hfill [\rul{SUBST} 8,10]
+\item \\(\Gamma_2,\ (\lquant{x}t[x])v\vdash t'\\)\hfill [\rul{UNDISCH} 11]
+\item \\(\Gamma_1\cup\Gamma_2\vdash t'\\)\hfill [\rul{SELECT\_ELIM} 6,12]
 \end{proof}
 \index{existential quantifier, in HOL logic@existential quantifier, in \HOL logic!inference rules for|)}
 
@@ -908,23 +910,23 @@ Given an equation where the right-hand side is a lambda-abstraction, one can der
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t = \lquant{x}t'[x]
-\over \Gamma\vdash t\ t = t'[t]$$
+\\(\\)\Gamma\vdash t = \lquant{x}t'[x]
+\over \Gamma\vdash t\ t = t'[t]\\(\\)
 \begin{itemize}
-\item Where  $t$ does not contain $x$.
+\item Where  \\(t\\) does not contain \\(x\\).
 \end{itemize}
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma\vdash t = \lquant{x} t'[x]$\hfill
+\item \\(\Gamma\vdash t = \lquant{x} t'[x]\\)\hfill
 [Suitably type-instantiated hypothesis]
-\item $\Gamma\vdash t\ t =
-(\lquant{x}t'[x])\ t$\hfill
+\item \\(\Gamma\vdash t\ t =
+(\lquant{x}t'[x])\ t\\)\hfill
 [\rul{AP\_THM} 1]
-\item $\vdash(\lquant{x}t'[x])\ t =
-t'[t]$\hfill [\rul{BETA\_CONV}]
-\item $\Gamma\vdash t\ t = t'[t]$\hfill
+\item \\(\vdash(\lquant{x}t'[x])\ t =
+t'[t]\\)\hfill [\rul{BETA\_CONV}]
+\item \\(\Gamma\vdash t\ t = t'[t]\\)\hfill
 [\rul{TRANS} 2,3]
 \end{proof}
 
@@ -939,23 +941,23 @@ t'[t]$\hfill [\rul{BETA\_CONV}]
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t = \lquant{x_1\cdots x_n}t'[x_1,\ldots,x_n]
-\over \Gamma\vdash t\ t_1\cdots t_n = t'[t_1,\ldots,t_n]$$
+\\(\\)\Gamma\vdash t = \lquant{x_1\cdots x_n}t'[x_1,\ldots,x_n]
+\over \Gamma\vdash t\ t_1\cdots t_n = t'[t_1,\ldots,t_n]\\(\\)
 \begin{itemize}
-\item Where none of the $t_i$ contain any of the $x_i$.
+\item Where none of the \\(t_i\\) contain any of the \\(x_i\\).
 \end{itemize}
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\Gamma\vdash t = \lquant{x_1\cdots x_n} t'[x_1,\ldots,x_n]$\hfill
+\item \\(\Gamma\vdash t = \lquant{x_1\cdots x_n} t'[x_1,\ldots,x_n]\\)\hfill
 [Suitably type-instantiated hypothesis]
-\item $\Gamma\vdash t\ t_1\cdots t_n =
-(\lquant{x_1\cdots x_n}t'[x_1,\ldots,x_n])\ t_1\cdots t_n$\hfill
-[\rul{AP\_THM} 1 ($n$ times)]
-\item $\vdash(\lquant{x_1\cdots x_n}t'[x_1,\ldots,x_n])\ t_1\cdots t_n =
-t'[t_1,\ldots,t_n]$\hfill [\rul{BETA\_CONV} ($n$ times)]
-\item $\Gamma\vdash t\ t_1\cdots t_n = t'[t_1,\ldots,t_n]$\hfill
+\item \\(\Gamma\vdash t\ t_1\cdots t_n =
+(\lquant{x_1\cdots x_n}t'[x_1,\ldots,x_n])\ t_1\cdots t_n\\)\hfill
+[\rul{AP\_THM} 1 (\\(n\\) times)]
+\item \\(\vdash(\lquant{x_1\cdots x_n}t'[x_1,\ldots,x_n])\ t_1\cdots t_n =
+t'[t_1,\ldots,t_n]\\)\hfill [\rul{BETA\_CONV} (\\(n\\) times)]
+\item \\(\Gamma\vdash t\ t_1\cdots t_n = t'[t_1,\ldots,t_n]\\)\hfill
 [\rul{TRANS} 2,3]
 \end{proof}
 
@@ -963,7 +965,7 @@ t'[t_1,\ldots,t_n]$\hfill [\rul{BETA\_CONV} ($n$ times)]
 
 
 
-### {\texorpdfstring{$\wedge$-introduction}{Conjunction-introduction}}
+### {\texorpdfstring{\\(\wedge\\)-introduction}{Conjunction-introduction}}
 \label{sec:conj}
 
 
@@ -976,33 +978,33 @@ t'[t_1,\ldots,t_n]$\hfill [\rul{BETA\_CONV} ($n$ times)]
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma_1\vdash t_1\qquad\qquad\qquad\Gamma_2\vdash t_2\over
-\Gamma_1\cup\Gamma_2 \vdash t_1\conj t_2$$
+\\(\\)\Gamma_1\vdash t_1\qquad\qquad\qquad\Gamma_2\vdash t_2\over
+\Gamma_1\cup\Gamma_2 \vdash t_1\conj t_2\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash \conj = \lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow(b_2\Rightarrow b))\Rightarrow b$
-\hfill [Definition of $\conj$]
-\item $\vdash t_1\conj t_2 = \uquant{b}(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b$\hfill
+\item \\(\vdash \conj = \lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow(b_2\Rightarrow b))\Rightarrow b\\)
+\hfill [Definition of \\(\conj\\)]
+\item \\(\vdash t_1\conj t_2 = \uquant{b}(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b\\)\hfill
 [\rul{RIGHT\_LIST\_BETA} 1]
-\item $t_1\Rightarrow(t_2\Rightarrow b)\vdash t_1\Rightarrow(t_2\Rightarrow b)$\hfill [\rul{ASSUME}]
-\item $\Gamma_1\vdash t_1$\hfill [Hypothesis]
-\item $\Gamma_1,\ t_1\Rightarrow(t_2\Rightarrow b)\vdash t_2\Rightarrow b$\hfill [\rul{MP} 3,4]
-\item $\Gamma_2\vdash t_2$\hfill [Hypothesis]
-\item $\Gamma_1\cup\Gamma_2,\ t_1\Rightarrow(t_2\Rightarrow b)\vdash b$\hfill [\rul{MP} 5,6]
-\item $\Gamma_1\cup \Gamma_2\vdash(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b$\hfill
+\item \\(t_1\Rightarrow(t_2\Rightarrow b)\vdash t_1\Rightarrow(t_2\Rightarrow b)\\)\hfill [\rul{ASSUME}]
+\item \\(\Gamma_1\vdash t_1\\)\hfill [Hypothesis]
+\item \\(\Gamma_1,\ t_1\Rightarrow(t_2\Rightarrow b)\vdash t_2\Rightarrow b\\)\hfill [\rul{MP} 3,4]
+\item \\(\Gamma_2\vdash t_2\\)\hfill [Hypothesis]
+\item \\(\Gamma_1\cup\Gamma_2,\ t_1\Rightarrow(t_2\Rightarrow b)\vdash b\\)\hfill [\rul{MP} 5,6]
+\item \\(\Gamma_1\cup \Gamma_2\vdash(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b\\)\hfill
 [\rul{DISCH} 7]
-\item $\Gamma_1\cup \Gamma_2\vdash \uquant{b}(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b$\hfill
+\item \\(\Gamma_1\cup \Gamma_2\vdash \uquant{b}(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b\\)\hfill
 [\rul{GEN} 8]
-\item $\Gamma_1\cup \Gamma_2\vdash t_1\conj t_2$\hfill
+\item \\(\Gamma_1\cup \Gamma_2\vdash t_1\conj t_2\\)\hfill
 [\rul{EQ\_MP} (\rul{SYM} 2),9]
 \end{proof}
 
 
 
 
-### $\wedge$-elimination}{Conjunction-elimination}
+### \\(\wedge\\)-elimination}{Conjunction-elimination}
 
 
 \begin{holboxed}
@@ -1014,36 +1016,36 @@ $$\Gamma_1\vdash t_1\qquad\qquad\qquad\Gamma_2\vdash t_2\over
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t_1\conj t_2\over
-\Gamma\vdash t_1\qquad\qquad\qquad \Gamma\vdash t_2$$
+\\(\\)\Gamma\vdash t_1\conj t_2\over
+\Gamma\vdash t_1\qquad\qquad\qquad \Gamma\vdash t_2\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash \conj = \lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow(b_2\Rightarrow b))\Rightarrow b$
-\hfill [Definition of $\conj$]
-\item $\vdash t_1\conj t_2 = \uquant{b}(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b$\hfill
+\item \\(\vdash \conj = \lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow(b_2\Rightarrow b))\Rightarrow b\\)
+\hfill [Definition of \\(\conj\\)]
+\item \\(\vdash t_1\conj t_2 = \uquant{b}(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b\\)\hfill
 [\rul{RIGHT\_LIST\_BETA} 1]
-\item $\Gamma\vdash t_1\conj t_2$\hfill [Hypothesis]
-\item $\Gamma\vdash \uquant{b}(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b$\hfill
+\item \\(\Gamma\vdash t_1\conj t_2\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash \uquant{b}(t_1\Rightarrow(t_2\Rightarrow b))\Rightarrow b\\)\hfill
 [\rul{EQ\_MP} 2,3]
-\item $\Gamma\vdash (t_1\Rightarrow(t_2\Rightarrow t_1))\Rightarrow t_1$\hfill [\rul{SPEC} 4]
-\item $t_1\vdash t_1$\hfill [\rul{ASSUME}]
-\item $t_1 \vdash t_2\Rightarrow t_1$\hfill [\rul{DISCH} 6]
-\item $\vdash t_1\Rightarrow(t_2\Rightarrow t_1)$\hfill [\rul{DISCH} 7]
-\item $\Gamma\vdash t_1$\hfill [\rul{MP} 5,8]
-\item $\Gamma\vdash (t_1\Rightarrow(t_2\Rightarrow t_2))\Rightarrow t_2$\hfill [\rul{SPEC} 4]
-\item $t_2\vdash t_2$\hfill [\rul{ASSUME}]
-\item $\vdash t_2\Rightarrow t_2$\hfill [\rul{DISCH} 11]
-\item $\vdash t_1\Rightarrow(t_2\Rightarrow t_2)$\hfill [\rul{DISCH} 12]
-\item $\Gamma\vdash t_2$\hfill [\rul{MP} 10,13]
-\item $\Gamma\vdash t_1$ and $\Gamma\vdash t_2$\hfill [9,14]
+\item \\(\Gamma\vdash (t_1\Rightarrow(t_2\Rightarrow t_1))\Rightarrow t_1\\)\hfill [\rul{SPEC} 4]
+\item \\(t_1\vdash t_1\\)\hfill [\rul{ASSUME}]
+\item \\(t_1 \vdash t_2\Rightarrow t_1\\)\hfill [\rul{DISCH} 6]
+\item \\(\vdash t_1\Rightarrow(t_2\Rightarrow t_1)\\)\hfill [\rul{DISCH} 7]
+\item \\(\Gamma\vdash t_1\\)\hfill [\rul{MP} 5,8]
+\item \\(\Gamma\vdash (t_1\Rightarrow(t_2\Rightarrow t_2))\Rightarrow t_2\\)\hfill [\rul{SPEC} 4]
+\item \\(t_2\vdash t_2\\)\hfill [\rul{ASSUME}]
+\item \\(\vdash t_2\Rightarrow t_2\\)\hfill [\rul{DISCH} 11]
+\item \\(\vdash t_1\Rightarrow(t_2\Rightarrow t_2)\\)\hfill [\rul{DISCH} 12]
+\item \\(\Gamma\vdash t_2\\)\hfill [\rul{MP} 10,13]
+\item \\(\Gamma\vdash t_1\\) and \\(\Gamma\vdash t_2\\)\hfill [9,14]
 \end{proof}
 
 
 
 
-### \texorpdfstring{Right $\vee$-introduction}{Right disjunction-introduction}}
+### \texorpdfstring{Right \\(\vee\\)-introduction}{Right disjunction-introduction}}
 
 \begin{holboxed}
 \index{DISJ1@\ml{DISJ1}|pin}
@@ -1053,30 +1055,30 @@ $$\Gamma\vdash t_1\conj t_2\over
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t_1\over \Gamma\vdash t_1\disj t_2$$
+\\(\\)\Gamma\vdash t_1\over \Gamma\vdash t_1\disj t_2\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash \disj =
-\lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow b)\Rightarrow(b_2\Rightarrow b)\Rightarrow b$
-\hfill [Definition of $\disj$]
-\item $\vdash t_1\disj t_2 = \uquant{b}(t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b$
+\item \\(\vdash \disj =
+\lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow b)\Rightarrow(b_2\Rightarrow b)\Rightarrow b\\)
+\hfill [Definition of \\(\disj\\)]
+\item \\(\vdash t_1\disj t_2 = \uquant{b}(t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b\\)
 \hfill [\rul{RIGHT\_LIST\_BETA} 1]
-\item $\Gamma\vdash t_1$\hfill [Hypothesis]
-\item $t_1\Rightarrow b\vdash t_1\Rightarrow b$\hfill [\rul{ASSUME}]
-\item $\Gamma,\ t_1\Rightarrow b\vdash b$\hfill [\rul{MP} 4,3]
-\item $\Gamma,\ t_1\Rightarrow b\vdash(t_2\Rightarrow b)\Rightarrow b$\hfill [\rul{DISCH} 5]
-\item $\Gamma\vdash (t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b$\hfill [\rul{DISCH} 6]
-\item $\Gamma\vdash \uquant{b}(t_1\Rightarrow b)
-\Rightarrow(t_2\Rightarrow b)\Rightarrow b$\hfill [\rul{GEN} 7]
-\item $\Gamma\vdash t_1\disj t_2$\hfill [\rul{EQ\_MP} (\rul{SYM} 2),8]
+\item \\(\Gamma\vdash t_1\\)\hfill [Hypothesis]
+\item \\(t_1\Rightarrow b\vdash t_1\Rightarrow b\\)\hfill [\rul{ASSUME}]
+\item \\(\Gamma,\ t_1\Rightarrow b\vdash b\\)\hfill [\rul{MP} 4,3]
+\item \\(\Gamma,\ t_1\Rightarrow b\vdash(t_2\Rightarrow b)\Rightarrow b\\)\hfill [\rul{DISCH} 5]
+\item \\(\Gamma\vdash (t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b\\)\hfill [\rul{DISCH} 6]
+\item \\(\Gamma\vdash \uquant{b}(t_1\Rightarrow b)
+\Rightarrow(t_2\Rightarrow b)\Rightarrow b\\)\hfill [\rul{GEN} 7]
+\item \\(\Gamma\vdash t_1\disj t_2\\)\hfill [\rul{EQ\_MP} (\rul{SYM} 2),8]
 \end{proof}
 
 
 
 
-### \texorpdfstring{Left $\vee$-introduction}{Left disjunction-introduction}
+### \texorpdfstring{Left \\(\vee\\)-introduction}{Left disjunction-introduction}
 
 
 \begin{holboxed}
@@ -1088,28 +1090,28 @@ $$\Gamma\vdash t_1\over \Gamma\vdash t_1\disj t_2$$
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t_2\over \Gamma\vdash t_1\disj t_2$$
+\\(\\)\Gamma\vdash t_2\over \Gamma\vdash t_1\disj t_2\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash \disj =
-\lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow b)\Rightarrow(b_2\Rightarrow b)\Rightarrow b$
-\hfill [Definition of $\disj$]
-\item $\vdash t_1\disj t_2 = \uquant{b}(t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b$
+\item \\(\vdash \disj =
+\lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow b)\Rightarrow(b_2\Rightarrow b)\Rightarrow b\\)
+\hfill [Definition of \\(\disj\\)]
+\item \\(\vdash t_1\disj t_2 = \uquant{b}(t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b\\)
 \hfill [\rul{RIGHT\_LIST\_BETA} 1]
-\item $\Gamma\vdash t_2$\hfill [Hypothesis]
-\item $t_2\Rightarrow b\vdash t_2\Rightarrow b$\hfill [\rul{ASSUME}]
-\item $\Gamma,\ t_2\Rightarrow b\vdash b$\hfill [\rul{MP} 4,3]
-\item $\Gamma\vdash(t_2\Rightarrow b)\Rightarrow b$\hfill [\rul{DISCH} 5]
-\item $\Gamma\vdash (t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b$\hfill [\rul{DISCH} 6]
-\item $\Gamma\vdash \uquant{b}(t_1\Rightarrow b)
-\Rightarrow(t_2\Rightarrow b)\Rightarrow b$\hfill [\rul{GEN} 7]
-\item $\Gamma\vdash t_1\disj t_2$\hfill [\rul{EQ\_MP} (\rul{SYM} 2),8]
+\item \\(\Gamma\vdash t_2\\)\hfill [Hypothesis]
+\item \\(t_2\Rightarrow b\vdash t_2\Rightarrow b\\)\hfill [\rul{ASSUME}]
+\item \\(\Gamma,\ t_2\Rightarrow b\vdash b\\)\hfill [\rul{MP} 4,3]
+\item \\(\Gamma\vdash(t_2\Rightarrow b)\Rightarrow b\\)\hfill [\rul{DISCH} 5]
+\item \\(\Gamma\vdash (t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b\\)\hfill [\rul{DISCH} 6]
+\item \\(\Gamma\vdash \uquant{b}(t_1\Rightarrow b)
+\Rightarrow(t_2\Rightarrow b)\Rightarrow b\\)\hfill [\rul{GEN} 7]
+\item \\(\Gamma\vdash t_1\disj t_2\\)\hfill [\rul{EQ\_MP} (\rul{SYM} 2),8]
 \end{proof}
 
 
-### \texorpdfstring{$\vee$-elimination}{Disjunction-elimination}
+### \texorpdfstring{\\(\vee\\)-elimination}{Disjunction-elimination}
 
 \begin{holboxed}
 \index{DISJ_CASES@\ml{DISJ\_CASES}|pin}
@@ -1119,28 +1121,28 @@ $$\Gamma\vdash t_2\over \Gamma\vdash t_1\disj t_2$$
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma\vdash t_1\disj t_2\qquad\qquad\qquad\Gamma_1,\ t_1\vdash t
+\\(\\)\Gamma\vdash t_1\disj t_2\qquad\qquad\qquad\Gamma_1,\ t_1\vdash t
 \qquad\qquad\qquad \Gamma_2,\ t_2\vdash t\over
-\Gamma\cup\Gamma_1\cup\Gamma_2\vdash t$$
+\Gamma\cup\Gamma_1\cup\Gamma_2\vdash t\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash \disj =
-\lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow b)\Rightarrow(b_2\Rightarrow b)\Rightarrow b$
-\hfill [Definition of $\disj$]
-\item $\vdash t_1\disj t_2 = \uquant{b}(t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b$
+\item \\(\vdash \disj =
+\lquant{b_1\ b_2}\uquant{b}(b_1\Rightarrow b)\Rightarrow(b_2\Rightarrow b)\Rightarrow b\\)
+\hfill [Definition of \\(\disj\\)]
+\item \\(\vdash t_1\disj t_2 = \uquant{b}(t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b\\)
 \hfill [\rul{RIGHT\_LIST\_BETA} 1]
-\item $\Gamma\vdash t_1\disj t_2$\hfill [Hypothesis]
-\item $\Gamma\vdash\uquant{b}(t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b$\hfill
+\item \\(\Gamma\vdash t_1\disj t_2\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash\uquant{b}(t_1\Rightarrow b)\Rightarrow(t_2\Rightarrow b)\Rightarrow b\\)\hfill
 [\rul{EQ\_MP} 2,3]
-\item $\Gamma\vdash(t_1\Rightarrow t)\Rightarrow(t_2\Rightarrow t)\Rightarrow t$\hfill [\rul{SPEC} 4]
-\item $\Gamma_1,\ t_1\vdash t$\hfill [Hypothesis]
-\item $\Gamma_1\vdash t_1\Rightarrow t$\hfill [\rul{DISCH} 6]
-\item $\Gamma\cup \Gamma_1\vdash (t_2\Rightarrow t)\Rightarrow t$\hfill [\rul{MP} 5,7]
-\item $\Gamma_2,\ t_2\vdash t$\hfill [Hypothesis]
-\item $\Gamma_2\vdash t_2\Rightarrow t$\hfill [\rul{DISCH} 9]
-\item $\Gamma\cup \Gamma_1\cup \Gamma_2\vdash t$\hfill [\rul{MP} 8,10]
+\item \\(\Gamma\vdash(t_1\Rightarrow t)\Rightarrow(t_2\Rightarrow t)\Rightarrow t\\)\hfill [\rul{SPEC} 4]
+\item \\(\Gamma_1,\ t_1\vdash t\\)\hfill [Hypothesis]
+\item \\(\Gamma_1\vdash t_1\Rightarrow t\\)\hfill [\rul{DISCH} 6]
+\item \\(\Gamma\cup \Gamma_1\vdash (t_2\Rightarrow t)\Rightarrow t\\)\hfill [\rul{MP} 5,7]
+\item \\(\Gamma_2,\ t_2\vdash t\\)\hfill [Hypothesis]
+\item \\(\Gamma_2\vdash t_2\Rightarrow t\\)\hfill [\rul{DISCH} 9]
+\item \\(\Gamma\cup \Gamma_1\cup \Gamma_2\vdash t\\)\hfill [\rul{MP} 8,10]
 \end{proof}
 \index{disjunction, in HOL logic@disjunction, in \HOL logic!inference rule for|)}
 
@@ -1159,29 +1161,29 @@ $$\Gamma\vdash t_1\disj t_2\qquad\qquad\qquad\Gamma_1,\ t_1\vdash t
 
 \vspace{12pt plus2pt minus1pt}
 
-$$\Gamma,\ \neg t\vdash \F\over \Gamma\vdash t$$
+\\(\\)\Gamma,\ \neg t\vdash \F\over \Gamma\vdash t\\(\\)
 
 \vspace{12pt plus2pt minus1pt}
 
 \begin{proof}
-\item $\vdash \neg = \lquant{b}b\Rightarrow\F$\hfill [Definition of $\neg$]
-\item $\vdash \neg t = t\Rightarrow\F$\hfill [\rul{RIGHT\_LIST\_BETA} 1]
-\item $\Gamma,\ \neg t\vdash\F$\hfill [Hypothesis]
-\item $\Gamma\vdash \neg t\Rightarrow\F$\hfill  [\rul{DISCH} 3]
-\item $\Gamma\vdash (t\Rightarrow\F)\Rightarrow\F$\hfill [\rul{SUBST} 2,4]
-\item $t = \F\vdash t = \F$\hfill [\rul{ASSUME}]
-\item $\Gamma,\ t=\F\vdash (\F\Rightarrow\F)\Rightarrow\F$\hfill [\rul{SUBST} 6,5]
-\item $\F\vdash\F$\hfill [\rul{ASSUME}]
-\item $\vdash \F\Rightarrow\F$\hfill [\rul{DISCH} 8]
-\item $\Gamma,\ t=\F\vdash\F$\hfill [\rul{MP} 7,9]
-\item $\vdash \F = \uquant{b}b$\hfill [Definition of $\F$]
-\item $\Gamma,\ t=\F\vdash \uquant{b}b$\hfill [\rul{SUBST} 11,10]
-\item $\Gamma,\ t=\F\vdash t$\hfill [\rul{SPEC} 12]
-\item $\vdash \uquant{b} (b = \T)\disj(b = \F)$\hfill [Axiom]
-\item $\vdash (t = \T)\disj(t = \F)$\hfill [\rul{SPEC} 14]
-\item $t=\T\vdash t=\T$\hfill [\rul{ASSUME}]
-\item $t=\T\vdash t$\hfill [\rul{EQT\_ELIM} 16]
-\item $\Gamma\vdash t$\hfill [\rul{DISJ\_CASES} 15,17,13]
+\item \\(\vdash \neg = \lquant{b}b\Rightarrow\F\\)\hfill [Definition of \\(\neg\\)]
+\item \\(\vdash \neg t = t\Rightarrow\F\\)\hfill [\rul{RIGHT\_LIST\_BETA} 1]
+\item \\(\Gamma,\ \neg t\vdash\F\\)\hfill [Hypothesis]
+\item \\(\Gamma\vdash \neg t\Rightarrow\F\\)\hfill  [\rul{DISCH} 3]
+\item \\(\Gamma\vdash (t\Rightarrow\F)\Rightarrow\F\\)\hfill [\rul{SUBST} 2,4]
+\item \\(t = \F\vdash t = \F\\)\hfill [\rul{ASSUME}]
+\item \\(\Gamma,\ t=\F\vdash (\F\Rightarrow\F)\Rightarrow\F\\)\hfill [\rul{SUBST} 6,5]
+\item \\(\F\vdash\F\\)\hfill [\rul{ASSUME}]
+\item \\(\vdash \F\Rightarrow\F\\)\hfill [\rul{DISCH} 8]
+\item \\(\Gamma,\ t=\F\vdash\F\\)\hfill [\rul{MP} 7,9]
+\item \\(\vdash \F = \uquant{b}b\\)\hfill [Definition of \\(\F\\)]
+\item \\(\Gamma,\ t=\F\vdash \uquant{b}b\\)\hfill [\rul{SUBST} 11,10]
+\item \\(\Gamma,\ t=\F\vdash t\\)\hfill [\rul{SPEC} 12]
+\item \\(\vdash \uquant{b} (b = \T)\disj(b = \F)\\)\hfill [Axiom]
+\item \\(\vdash (t = \T)\disj(t = \F)\\)\hfill [\rul{SPEC} 14]
+\item \\(t=\T\vdash t=\T\\)\hfill [\rul{ASSUME}]
+\item \\(t=\T\vdash t\\)\hfill [\rul{EQT\_ELIM} 16]
+\item \\(\Gamma\vdash t\\)\hfill [\rul{DISJ\_CASES} 15,17,13]
 \end{proof}
 \index{derived rules, in HOL logic@derived rules, in \HOL logic!list and derivations of some|)}
 \index{inference rules, of HOL logic@inference rules, of HOL logic!derived|)}

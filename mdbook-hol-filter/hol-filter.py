@@ -26,9 +26,10 @@ if __name__ == '__main__':
     # load both the context and the book representations from stdin
     context, book = json.load(sys.stdin)
     # and now, we can just modify the content of the first chapter
-    #with open("/home/myreen/del.txt", "w") as f:
-    #    print(book, file=f)
+    with open("/home/myreen/del.txt", "w") as f:
+        print(book, file=f)
     for s_index in book['sections']:
-        s_index['Chapter']['content'] = run_unix_command(["/home/myreen/HOL/Manual/Tools/polyscripter"],s_index['Chapter']['content'])
+        if 'Chapter' in s_index:
+            s_index['Chapter']['content'] = run_unix_command(["/home/myreen/HOL/Manual/Tools/polyscripter"],s_index['Chapter']['content'])
     # we are done with the book's modification, we can just print it to stdout,
     print(json.dumps(book))
