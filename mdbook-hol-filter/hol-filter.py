@@ -10,9 +10,12 @@ def run_unix_command(command, input_str):
         input=input_str,
         text=True,
         capture_output=True,
-        check=True   # raises an error if the command fails
+        check=False   # raises an error if the command fails
     )
-    return result.stdout
+    if (result.returncode == 0):
+        return result.stdout
+    else:
+        return "*HOL failed:*\n```\n" + result.stderr + "\n```"
 
 if __name__ == '__main__':
     if len(sys.argv) > 1: # we check if we received any argument
@@ -23,8 +26,8 @@ if __name__ == '__main__':
     # load both the context and the book representations from stdin
     context, book = json.load(sys.stdin)
     # and now, we can just modify the content of the first chapter
-    with open("/home/myreen/del.txt", "w") as f:
-        print(book, file=f)
+    #with open("/home/myreen/del.txt", "w") as f:
+    #    print(book, file=f)
     for s_index in book['sections']:
         s_index['Chapter']['content'] = run_unix_command(["/home/myreen/HOL/Manual/Tools/polyscripter"],s_index['Chapter']['content'])
     # we are done with the book's modification, we can just print it to stdout,
