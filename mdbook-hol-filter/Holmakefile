@@ -1,0 +1,4 @@
+INCLUDES = $(HOLDIR)/Manual/Tools
+
+hol-filter.py: $(HOLDIR)/Manual/Tools/polyscripter
+	sed "s|POLYSCRIPTER_PATH|$(HOLDIR)/Manual/Tools/polyscripter|g" hol-filter.py.src > hol-filter.py

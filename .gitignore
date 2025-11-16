@@ -1,2 +1,4 @@
 /book
 *~
+mdbook-hol-filter/.hol
+mdbook-hol-filter/hol-filter.py

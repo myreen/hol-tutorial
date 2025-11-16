@@ -17,6 +17,8 @@ def run_unix_command(command, input_str):
     else:
         return "*HOL failed:*\n```\n" + result.stderr + "\n```"
 
+polyscripter_bin_path = "POLYSCRIPTER_PATH"
+
 if __name__ == '__main__':
     if len(sys.argv) > 1: # we check if we received any argument
         if sys.argv[1] == "supports":
@@ -30,6 +32,6 @@ if __name__ == '__main__':
         print(book, file=f)
     for s_index in book['sections']:
         if 'Chapter' in s_index:
-            s_index['Chapter']['content'] = run_unix_command(["/home/myreen/HOL/Manual/Tools/polyscripter"],s_index['Chapter']['content'])
+            s_index['Chapter']['content'] = run_unix_command([polyscripter_bin_path],s_index['Chapter']['content'])
     # we are done with the book's modification, we can just print it to stdout,
     print(json.dumps(book))
