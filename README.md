@@ -4,6 +4,8 @@
 
 Make sure you:
 - have HOL installed
-- run Holmake in `mdbook-hol-filter` dir
+- run `Holmake` in the `mdbook-hol-filter` directory
 
-Then you can build the book using: `mdbook build`
+Then you can build the book using `mdbook build` in the root directory of this repo.
+
+When working on the book, running `mdbook serve` can be nice.
